@@ -35,10 +35,10 @@ include(${_project_options_SOURCE_DIR}/Index.cmake)
 
 # Set the project name and language
 project(
-  myproject
+  galaxy
   VERSION 0.0.1
   DESCRIPTION ""
-  HOMEPAGE_URL "%%myurl%%"
+  HOMEPAGE_URL "https://github.com/dholmes215/galaxy"
   LANGUAGES CXX C)
 
 set(GIT_SHA
