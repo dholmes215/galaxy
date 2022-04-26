@@ -120,7 +120,7 @@ jobs:
           conan: true
           vcpkg: false
           ccache: true
-          clangtidy: true
+          clangtidy: 13.0.0
 
           cppcheck: true
 
