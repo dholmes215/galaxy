@@ -5,6 +5,8 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include "game_ui.hpp"
+
 #include <docopt/docopt.h>
 #include <fmt/format.h>
 
@@ -16,8 +18,6 @@
 // configuration step. It creates a namespace called `galaxy`. You can modify
 // the source template at `configured_files/config.hpp.in`.
 #include <internal_use_only/config.hpp>
-
-void run() {}
 
 int main(int argc, const char** argv)
 {
@@ -40,7 +40,7 @@ int main(int argc, const char** argv)
                            fmt::format("{} {}", galaxy::cmake::project_name,
                                        galaxy::cmake::project_version))};
 
-        run();
+        galaxy::run_game();
     }
     catch (const std::exception& e) {
         fmt::print("Unhandled exception in main: {}", e.what());
