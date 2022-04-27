@@ -15,7 +15,7 @@ void run() {}
 int main(int argc, const char** argv)
 {
     try {
-        static constexpr auto USAGE =
+        static constexpr auto USAGE{
             R"(
 
     Usage:
@@ -25,13 +25,13 @@ int main(int argc, const char** argv)
  Options:
           -h --help     Show this screen.
           --version     Show version.
-)";
+)"};
 
-        std::map<std::string, docopt::value> args =
+        std::map<std::string, docopt::value> args{
             docopt::docopt(USAGE, {std::next(argv), std::next(argv, argc)},
                            true,  // show help if requested
                            fmt::format("{} {}", galaxy::cmake::project_name,
-                                       galaxy::cmake::project_version));
+                                       galaxy::cmake::project_version))};
 
         run();
     }
