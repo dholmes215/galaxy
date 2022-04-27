@@ -4,9 +4,9 @@ find_package(docopt CONFIG)
 find_package(ftxui CONFIG)
 
 # Generic test that uses conan libs
-add_executable(intro main.cpp)
+add_executable(galaxy main.cpp)
 target_link_libraries(
-  intro
+  galaxy
   PRIVATE project_options
           project_warnings
           docopt::docopt
@@ -16,4 +16,4 @@ target_link_libraries(
           ftxui::dom
           ftxui::component)
 
-target_include_directories(intro PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
+target_include_directories(galaxy PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")

@@ -19,9 +19,9 @@ int main(int argc, const char** argv)
             R"(
 
     Usage:
-          intro
-          intro (-h | --help)
-          intro --version
+          galaxy
+          galaxy (-h | --help)
+          galaxy --version
  Options:
           -h --help     Show this screen.
           --version     Show version.
