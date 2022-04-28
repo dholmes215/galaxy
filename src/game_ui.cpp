@@ -12,32 +12,40 @@
 
 #include <spdlog/spdlog.h>
 
+#include <functional>
+
 namespace galaxy {
 
 using namespace ftxui;
 
 class title_screen : public ftxui::ComponentBase {
    public:
-    explicit title_screen(ftxui::ScreenInteractive& screen) : screen_{screen}
+    struct menu_callbacks {
+        std::function<void()> new_game;
+        std::function<void()> load_game;
+        std::function<void()> quit;
+    };
+
+    explicit title_screen(menu_callbacks callbacks)
+        : callbacks_{std::move(callbacks)}
     {
-        auto menu_action{
-            [&selection = menu_selected_, exit = screen_.ExitLoopClosure()] {
-                switch (selection) {
-                    case 0:
-                        spdlog::info("Clicked New Game");
-                        break;
-                    case 1:
-                        spdlog::info("Clicked Load Game");
-                        break;
-                    case 2:
-                        spdlog::info("Clicked Quit");
-                        exit();
-                        break;
-                    default:
-                        spdlog::info("Clicked Unknown");
-                        break;
-                }
-            }};
+        auto menu_action{[&] {
+            switch (menu_selected_) {
+                case 0:
+                    callbacks_.new_game();
+                    break;
+                case 1:
+                    callbacks_.load_game();
+                    break;
+                case 2:
+                    callbacks_.quit();
+                    break;
+                default:
+                    spdlog::info("Clicked Unknown");
+                    // TODO: Throw
+                    break;
+            }
+        }};
         menu_option_.on_enter = menu_action;
         Add(menu_);
     }
@@ -54,7 +62,7 @@ class title_screen : public ftxui::ComponentBase {
     static constexpr const int menu_width_{20};
     static constexpr const int menu_height_{5};
 
-    ftxui::ScreenInteractive& screen_;
+    menu_callbacks callbacks_;
 
     static const std::vector<std::string>* menu_entries()
     {
@@ -72,7 +80,13 @@ class title_screen : public ftxui::ComponentBase {
 void run_game(const std::vector<ftxui::Event>& events)
 {
     auto screen{ftxui::ScreenInteractive::Fullscreen()};
-    ftxui::Component component{std::make_shared<title_screen>(screen)};
+
+    title_screen::menu_callbacks callbacks{
+        .new_game{[] { spdlog::info("Clicked New Game"); }},
+        .load_game{[] { spdlog::info("Clicked Load Game"); }},
+        .quit{screen.ExitLoopClosure()}};
+    ftxui::Component component{
+        std::make_shared<title_screen>(std::move(callbacks))};
 
     // Inject events for test automation
     for (const auto& event : events) {
