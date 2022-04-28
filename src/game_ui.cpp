@@ -69,13 +69,13 @@ class title_screen : public ftxui::ComponentBase {
         ftxui::Menu(menu_entries(), &menu_selected_, &menu_option_)};
 };
 
-void run_game(std::vector<ftxui::Event> events)
+void run_game(const std::vector<ftxui::Event>& events)
 {
     auto screen{ftxui::ScreenInteractive::Fullscreen()};
     ftxui::Component component{std::make_shared<title_screen>(screen)};
 
     // Inject events for test automation
-    for (auto event : events) {
+    for (const auto& event : events) {
         screen.PostEvent(event);
     }
 

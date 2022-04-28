@@ -14,7 +14,7 @@
 
 // Special prototype that injects events for automation
 namespace galaxy {
-void run_game(std::vector<ftxui::Event> events);
+void run_game(const std::vector<ftxui::Event>&);
 }  // namespace galaxy
 
 TEST_CASE("Can exit title screen", "[ui]")
