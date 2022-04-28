@@ -45,33 +45,40 @@ class title_screen : public ftxui::ComponentBase {
     ftxui::Element Render() override
     {
         return menu_->Render() | border | center |
-               size(Direction::WIDTH, Constraint::EQUAL, 20) |
-               size(Direction::HEIGHT, Constraint::EQUAL, 5) | align_right;
+               size(Direction::WIDTH, Constraint::EQUAL, menu_width_) |
+               size(Direction::HEIGHT, Constraint::EQUAL, menu_height_) |
+               align_right;
     }
 
    private:
+    static constexpr const int menu_width_{20};
+    static constexpr const int menu_height_{5};
+
     ftxui::ScreenInteractive& screen_;
 
-    static const std::vector<std::string> menu_entries_;
+    static const std::vector<std::string>* menu_entries()
+    {
+        static const std::vector<std::string> out{"New Game", "Load Game",
+                                                  "Quit"};
+        return &out;
+    }
+
     int menu_selected_{0};
     ftxui::MenuOption menu_option_;
     ftxui::Component menu_{
-        ftxui::Menu(&menu_entries_, &menu_selected_, &menu_option_)};
+        ftxui::Menu(menu_entries(), &menu_selected_, &menu_option_)};
 };
-
-const std::vector<std::string> title_screen::menu_entries_{"New Game",
-                                                           "Load Game", "Quit"};
 
 void run_game(std::vector<ftxui::Event> events)
 {
     auto screen{ftxui::ScreenInteractive::Fullscreen()};
     ftxui::Component component{std::make_shared<title_screen>(screen)};
 
-	// Inject events for test automation
+    // Inject events for test automation
     for (auto event : events) {
-		screen.PostEvent(event);
-	}
-	
+        screen.PostEvent(event);
+    }
+
     screen.Loop(component);
 }
 
