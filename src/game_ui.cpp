@@ -82,9 +82,9 @@ void run_game(const std::vector<ftxui::Event>& events)
     auto screen{ftxui::ScreenInteractive::Fullscreen()};
 
     title_screen::menu_callbacks callbacks{
-        .new_game{[] { spdlog::info("Clicked New Game"); }},
-        .load_game{[] { spdlog::info("Clicked Load Game"); }},
-        .quit{screen.ExitLoopClosure()}};
+        .new_game = [] { spdlog::info("Clicked New Game"); },
+        .load_game = [] { spdlog::info("Clicked Load Game"); },
+        .quit = screen.ExitLoopClosure()};
     ftxui::Component component{
         std::make_shared<title_screen>(std::move(callbacks))};
 
