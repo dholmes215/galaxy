@@ -62,13 +62,22 @@ class title_screen : public ftxui::ComponentBase {
 const std::vector<std::string> title_screen::menu_entries_{"New Game",
                                                            "Load Game", "Quit"};
 
-void run_game()
+void run_game(std::vector<ftxui::Event> events)
 {
     auto screen{ftxui::ScreenInteractive::Fullscreen()};
-
     ftxui::Component component{std::make_shared<title_screen>(screen)};
 
+	// Inject events for test automation
+    for (auto event : events) {
+		screen.PostEvent(event);
+	}
+	
     screen.Loop(component);
+}
+
+void run_game()
+{
+    run_game({});
 }
 
 }  // namespace galaxy

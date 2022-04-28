@@ -1,4 +1,5 @@
 find_package(Catch2 REQUIRED)
+find_package(ftxui CONFIG REQUIRED)
 
 include(CTest)
 include(Catch)
@@ -19,7 +20,8 @@ set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${P
 
 
 add_executable(tests tests.cpp)
-target_link_libraries(tests PRIVATE project_warnings project_options catch_main)
+target_link_libraries(tests PRIVATE project_warnings project_options catch_main game
+          ftxui::component)
 
 # automatically discover tests that are defined in catch based test files you can modify the unittests. Set TEST_PREFIX
 # to whatever you want, or use different for different binaries

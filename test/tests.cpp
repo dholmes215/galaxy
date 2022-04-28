@@ -5,17 +5,20 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include <game_ui.hpp>
+
+#include <ftxui/component/event.hpp>
+
+#define CATCH_CONFIG_NO_WINDOWS_SEH
 #include <catch2/catch.hpp>
 
-unsigned int Factorial(unsigned int number)
-{
-    return number <= 1 ? number : Factorial(number - 1) * number;
-}
+// Special prototype that injects events for automation
+namespace galaxy {
+void run_game(std::vector<ftxui::Event> events);
+}  // namespace galaxy
 
-TEST_CASE("Factorials are computed", "[factorial]")
+TEST_CASE("Can exit title screen", "[ui]")
 {
-    REQUIRE(Factorial(1) == 1);
-    REQUIRE(Factorial(2) == 2);
-    REQUIRE(Factorial(3) == 6);
-    REQUIRE(Factorial(10) == 3628800);
+    galaxy::run_game({ftxui::Event::End, ftxui::Event::Return});
+    REQUIRE(true);  // If we get here, the test passed
 }

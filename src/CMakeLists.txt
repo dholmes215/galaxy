@@ -14,6 +14,11 @@ target_link_libraries(
           ftxui::dom
           ftxui::component)
 
+target_include_directories(
+  game
+  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} 
+  PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
+
 add_executable(galaxy main.cpp)
 target_link_libraries(
   galaxy
